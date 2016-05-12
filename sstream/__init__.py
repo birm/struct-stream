@@ -1,6 +1,14 @@
 import json
 import xmltodict
 
+try:
+    # py3
+    from urllib.request import urlopen
+except ImportError:
+    # py2
+    from urllib2 import urlopen
+
+
 class sstream:
 
     def __init__(self,url,variables, parent_name="/", datatype="json", buffer_size=50, time_key=true, key_name=""):
@@ -28,7 +36,7 @@ class sstream:
                 self.position=self.position+1
 
     def update():
-        self.raw=httpget(url)
+        self.raw=urlopen(url).read()
         switch self.datatype:
             case "json":
                 internal = json.loads(self.raw)
