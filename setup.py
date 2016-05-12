@@ -8,6 +8,15 @@ setup(
     url="http://rbirm.us/struct-stream",
     version='0.2',
     packages=['sstream'],
-    license='none, to be added later',
+    license='none, to be added on alpha release',
     long_description=open('README.txt').read(),
+    install_requires=[
+        "xmltodict",
+    ],
+    classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
+        "Topic :: Internet :: Log Analysis",
+        "Topic :: Utilities",
+        "Programming Language :: Python :: 3",
+    ],
 )
