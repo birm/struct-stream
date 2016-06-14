@@ -6,7 +6,7 @@ setup(
     author='Ryan Birmingham',
     description='Save stream xml or json information for easy usage, keep size under control, use key constraints, and summarize your data.',
     url="http://rbirm.us/struct-stream",
-    version='0.2',
+    version='0.3',
     packages=['sstream'],
     license='none, to be added on alpha release',
     long_description=open('README.txt').read(),
