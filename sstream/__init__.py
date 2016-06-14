@@ -11,12 +11,15 @@ except ImportError:
 
 class sstream:
 
-    def __init__(self,url,variables, parent_name="/", datatype="json", buffer_size=50, time_key=true, key_name=""):
+    def __init__(self,url,variables, parent_name="/", datatype="json", method="text", buffer_size=50, time_key=true, key_name=""):
         self.raw=""
         self.data=[None]*buffer_size
         self.keys=[None]*buffer_size
         self.position=0
         self.update()
+        if self.method == "stream":
+            #open stream
+            #set status variable
 
     def add_next(record,key):
         #what kind of thing to do
@@ -36,26 +39,35 @@ class sstream:
                 self.position=self.position+1
 
     def update():
-        self.raw=urlopen(url).read()
-        switch self.datatype:
-            case "json":
+        #text
+        if self.method=="text":
+            self.raw=urlopen(url).read()
+            if self.datatype == "json":
                 internal = json.loads(self.raw)
                 if (not((self.parent_name=="/") or (self.parent_name=="\\")):
                     internal=internal[self.parent_name]
-            case "xml":
+            elif self.datatype == "xml":
                 internal = xmltodict.parse(raw)
                 if (not((self.parent_name=="/") or (self.parent_name=="\\")):
                     internal=internal[self.parent_name]
-        for (i=0; i<self.internal.size; i++){
-            for (j=0; j<self.variables.size; j++){
-                if not time_key:
-                    key=self.internal[i][self.key_name]
-                try:
-                    record[j]=self.internal[i][self.variables[j]]
-                except()
-                    record[j]="Not Found in Source"
-                self.add_next(record,self.keys)
-        return 0
+            else:
+                raise NotImplementedError('selected text format not implemented')
+            for (i=0; i<self.internal.size; i++){
+                for (j=0; j<self.variables.size; j++){
+                    if not time_key:
+                        key=self.internal[i][self.key_name]
+                    try:
+                        record[j]=self.internal[i][self.variables[j]]
+                    except BaseException:
+                        record[j]="Not Found in Source"
+                    self.add_next(record,self.keys)
+        elif self.method="stream":
+            if not self.stream_open:
+                raise ConnectionError('stream was not open during attempted update')
+            raise NotImplementedError('stream method not yet implemented')
+        else:
+            raise NotImplementedError('selected method not implemented')
+
 
     def summarize(function):
         return reduce(lambda *args: None,reduce(function,list(map(list, map(None,*self.data)))))
