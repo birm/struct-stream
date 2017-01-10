@@ -1,3 +1,9 @@
+# status
+
+Devleopment on struct-stream has ended.
+
+# Struct-Stream
+
 Structured Streams - Save stream xml or json information for easy usage, keep size under control, use key constraints, and summarize your data.
 
 
